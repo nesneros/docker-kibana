@@ -13,11 +13,11 @@ RUN apt-get update -y && apt-get install -y git npm libfreetype6 fontconfig \
     # Install line sg
     && cd /usr/share/kibana/plugins && git clone --depth=1 https://github.com/sbeyn/kibana-plugin-line-sg.git line_sg \
     && cd line_sg && rm -rf .git \
-    && sed -Ei "s/(\"version\":).*$/\1 \"$KIBANA_VERSION\"/" package.json 
+    && sed -Ei "s/(\"version\":).*$/\1 \"$KIBANA_VERSION\"/" package.json \
     # APT clean up
-#    && apt-get remove --purge -y git npm $(apt-mark showauto)\
-#    && apt-get autoremove -y \
-#    && rm -rf /var/lib/apt/lists/*
+    && apt-get remove --purge -y git npm \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 USER kibana
 
