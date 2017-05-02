@@ -4,7 +4,7 @@ USER root
 
 ENV KIBANA_VERSION=5.3.2
 
-RUN apt-get update -y && apt-get install -y git npm \
+RUN apt-get update -y && apt-get install -y git npm libfreetype6 fontconfig \
     # Install c3 charts
     && cd /usr/share/kibana/plugins && git clone --depth=1 https://github.com/mstoyano/kbn_c3js_vis.git c3_charts \
     && cd c3_charts && rm -rf .git \
