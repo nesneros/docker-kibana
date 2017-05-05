@@ -1,12 +1,13 @@
-FROM docker.elastic.co/kibana/kibana:5.3.2
+FROM docker.elastic.co/kibana/kibana:5.4.0
 
 USER root
 
-ENV KIBANA_VERSION=5.3.2
+ENV KIBANA_VERSION=5.4.0
 
-RUN apt-get update -y && apt-get install -y git npm libfreetype6 fontconfig \
-    # Install c3 charts
-    && cd /usr/share/kibana/plugins && git clone --depth=1 https://github.com/mstoyano/kbn_c3js_vis.git c3_charts \
+RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
+    && yum install -y git nodejs freetype fontconfig \
+    # Install line sg
+    cd /usr/share/kibana/plugins && git clone --depth=1 https://github.com/mstoyano/kbn_c3js_vis.git c3_charts \
     && cd c3_charts && rm -rf .git \
     && sed -Ei "s/(\"version\":).*,$/\1 \"$KIBANA_VERSION\",/" package.json \
     && npm install \
@@ -14,15 +15,7 @@ RUN apt-get update -y && apt-get install -y git npm libfreetype6 fontconfig \
     && cd /usr/share/kibana/plugins && git clone --depth=1 https://github.com/sbeyn/kibana-plugin-line-sg.git line_sg \
     && cd line_sg && rm -rf .git \
     && sed -Ei "s/(\"version\":).*$/\1 \"$KIBANA_VERSION\"/" package.json \
-    # APT clean up
-    && apt-get remove --purge -y git npm \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+    # yum cleanup
+    && yum clean all
 
 USER kibana
-
-# See https://github.com/elastic/kibana/issues/6057
-# This step might take a few minutes
-#RUN /usr/share/kibana/bin/kibana 2>&1 | grep -m 1 "Optimization of .* complete in .* seconds"
-
-
