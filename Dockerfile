@@ -5,7 +5,7 @@ USER root
 ENV KIBANA_VERSION=6.0.0-alpha1
 
 RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
-    && yum install -y git nodejs freetype fontconfig \
+    && yum install -y git nodejs patch freetype fontconfig \
     # Install metrics calculator
     && cd /usr/share/kibana/plugins && git clone --depth=1 https://github.com/ommsolutions/kibana_ext_metrics_vis.git extended_metric_vis \
     && cd extended_metric_vis && rm -rf .git \
@@ -20,6 +20,10 @@ RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
      # && cd line_sg && rm -rf .git \
      # && sed -Ei "s/(\"version\":).*$/\1 \"$KIBANA_VERSION\"/" package.json \
     # yum cleanup
+    && yum remove -y -C git nodejs \
     && yum clean all
+
+COPY formatting.patch /usr/share/kibana/
+RUN cd /usr/share/kibana && patch -p1 < formatting.patch
 
 USER kibana
