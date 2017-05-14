@@ -1,0 +1,13 @@
+diff --git a/src/ui/public/stringify/types/_numeral.js b/src/ui/public/stringify/types/_numeral.js
+index 0d6cc5f8eb31..cd51c01378d0 100644
+--- a/src/ui/public/stringify/types/_numeral.js
++++ b/src/ui/public/stringify/types/_numeral.js
+@@ -22,7 +22,7 @@ export function StringifyTypesNumeralProvider(Private) {
+ 
+     if (isNaN(val)) return '';
+ 
+-    return numeral.set(val).format(this.param('pattern'));
++    return numeral.set(val).format(this.param('pattern')).replace(",","t").replace(".",",").replace("t",".");
+   };
+ 
+ 
