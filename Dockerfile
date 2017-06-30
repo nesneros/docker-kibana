@@ -2,7 +2,7 @@ FROM docker.elastic.co/kibana/kibana:5.4.3
 
 USER root
 
-ENV KIBANA_VERSION=5.4.0
+ENV KIBANA_VERSION=5.4.3
 
 RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
     && yum install -y git nodejs patch freetype fontconfig \
