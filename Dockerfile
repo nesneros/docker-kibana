@@ -4,7 +4,6 @@ USER root
 
 ENV KIBANA_VERSION=6.0.0-beta1
 
-
 RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
     && yum install -y git nodejs patch freetype fontconfig \
     # Install metrics calculator
@@ -25,6 +24,6 @@ RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
     && yum clean all
 
 COPY formatting.patch /usr/share/kibana/
-RUN cd /usr/share/kibana && patch -p1 < formatting.patch
+# RUN cd /usr/share/kibana && patch -p1 < formatting.patch
 
 USER kibana
