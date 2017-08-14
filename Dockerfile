@@ -1,8 +1,8 @@
-FROM docker.elastic.co/kibana/kibana:6.0.0-alpha1
+FROM docker.elastic.co/kibana/kibana:6.0.0-beta1
 
 USER root
 
-ENV KIBANA_VERSION=6.0.0-alpha1
+ENV KIBANA_VERSION=6.0.0-beta1
 
 RUN curl -sL https://rpm.nodesource.com/setup_6.x | bash - \
     && yum install -y git nodejs patch freetype fontconfig \
